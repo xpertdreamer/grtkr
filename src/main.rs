@@ -12,9 +12,12 @@ struct CLI {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = CLI::parse();
-    // TODO: no panic
-    let f = File::open(&args.file).expect("couldn`t open a file");
-    let reader = BufReader::new(f);
+    let f = File::open(&args.file);
+    let file = match f {
+        Ok(file) => { file },
+        Err(error) => { return Err(error.into()); }
+    };
+    let reader = BufReader::new(file);
 
     // TODO: print some patterns like line-numbers, dollar-signs and etc
     for ln in reader.lines()
