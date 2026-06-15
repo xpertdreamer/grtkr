@@ -1,3 +1,5 @@
+use std::{fs::File, io::{BufRead, BufReader}};
+
 use clap::Parser;
 
 #[derive(Parser)]
@@ -8,7 +10,20 @@ struct CLI {
     file: std::path::PathBuf
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = CLI::parse();
+    let f = File::open(&args.file).expect("couldn`t open a file");
+    let reader = BufReader::new(f);
+
+    // TODO: indentation printing
+    for ln in reader.lines()
+    {
+        let line = ln?;
+        let line = line.trim();
+        println!("{} {}", args.pat, line);
+    }
+
+    // TODO: file statistics
     println!("pat: {:?}, file: {:?}", args.pat, args.file);
+    Ok(())
 }
