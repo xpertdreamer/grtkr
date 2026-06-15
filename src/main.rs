@@ -12,10 +12,11 @@ struct CLI {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = CLI::parse();
+    // TODO: no panic
     let f = File::open(&args.file).expect("couldn`t open a file");
     let reader = BufReader::new(f);
 
-    // TODO: indentation printing
+    // TODO: print some patterns like line-numbers, dollar-signs and etc
     for ln in reader.lines()
     {
         let line = ln?;
