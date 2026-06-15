@@ -19,7 +19,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     for ln in reader.lines()
     {
         let line = ln?;
-        let line = line.trim();
+        let line = line.trim_end();
         println!("{} {}", args.pat, line);
     }
 
